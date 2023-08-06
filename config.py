@@ -72,6 +72,7 @@ keys = [
     Key([mod, "control", "shift"], "q", lazy.shutdown(), desc="Shutdown Qtile"),
     Key([mod], "p", lazy.spawn("rofi -show drun"), desc="Spawn a rofi command using a prompt widget"),
     Key([mod], "w", lazy.spawn("firefox"), desc="Spawn firefox"),
+    Key([mod], "f", lazy.spawn("Thunar"), desc="Spawn Thunar File Manager"),
 ]
 
 groups = [Group(i) for i in "123456789"]
@@ -101,7 +102,7 @@ for i in groups:
     )
 
 layouts = [
-    layout.Columns(border_focus_stack=["#add8e6", "#add8e6"], border_width=2),
+    layout.Columns(border_focus=["#add8e6", "#add8e6"], border_width=2, margin=2),
     layout.Max(),
     # Try more layouts by unleashing below layouts.
     # layout.Stack(num_stacks=2),
