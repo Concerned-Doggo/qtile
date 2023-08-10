@@ -129,7 +129,7 @@ screens = [
         bottom=bar.Bar(
             [
                 widget.CurrentLayout(),
-                widget.GroupBox(),
+                widget.GroupBox(highlight_method="line"),
                 widget.Prompt(),
                 widget.WindowName(),
                 widget.Chord(
@@ -142,6 +142,9 @@ screens = [
                 # widget.TextBox("Press &lt;M-r&gt; to spawn", foreground="#d75f5f"),
                 # NB Systray is incompatible with Wayland, consider using StatusNotifier instead
                 # widget.StatusNotifier(),
+                # widget.Volume()
+                widget.Net(),
+                widget.ThermalZone(),
                 widget.Systray(),
                 widget.Clock(format=" %a %I:%M %p %D"),
                 widget.QuickExit(),
@@ -153,7 +156,7 @@ screens = [
 
         ),
             # set static wallpaper
-            wallpaper = '~/Pictures/interstellar-blackhole-1920-1080-v0-zaf8zj2tr7ka1.png',
+            wallpaper = '~/Pictures/night-in-the-desert.png',
             # set wallpaper mode to 'fill' or 'stretch'
             wallpaper_mode='fill'
     ),
