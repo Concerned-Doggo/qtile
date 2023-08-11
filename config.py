@@ -71,11 +71,12 @@ keys = [
     Key([mod, "control"], "r", lazy.reload_config(), desc="Reload the config"),
     Key([mod, "control", "shift"], "q", lazy.shutdown(), desc="Shutdown Qtile"),
     Key([mod], "p", lazy.spawn("rofi -show drun"), desc="Spawn a rofi command using a prompt widget"),
+    Key([mod], "d", lazy.spawn("rofi -show"), desc="Spawn a rofi command using a prompt widget"),
     Key([mod], "w", lazy.spawn("firefox"), desc="Spawn firefox"),
     Key([mod], "f", lazy.spawn("Thunar"), desc="Spawn Thunar File Manager"),
 ]
 
-groups = [Group(i) for i in "123456789"]
+groups = [Group(i) for i in '1234']
 
 for i in groups:
     keys.extend(
@@ -103,7 +104,7 @@ for i in groups:
 
 layouts = [
     layout.Columns(border_focus=["#add8e6", "#add8e6"], border_width=2, margin=2),
-    layout.Max(),
+    # layout.Max(),
     # Try more layouts by unleashing below layouts.
     # layout.Stack(num_stacks=2),
     # layout.Bsp(),
@@ -126,37 +127,44 @@ extension_defaults = widget_defaults.copy()
 
 screens = [
     Screen(
-        bottom=bar.Bar(
+        top=bar.Bar(
             [
-                widget.CurrentLayout(),
+                # widget.CurrentLayout(),
                 widget.GroupBox(highlight_method="line"),
-                widget.Prompt(),
-                widget.WindowName(),
-                widget.Chord(
-                    chords_colors={
-                        "launch": ("#add8e6", "#ffffff"),
-                    },
-                    name_transform=lambda name: name.upper(),
-                ),
+                # widget.Prompt(),
+                # widget.WindowName(),
+                widget.WindowTabs(separator="|", background="#2e3440", foreground="#d8dee9", padding=10),
+
+                # widget.Chord(
+                #     chords_colors={
+                #         "launch": ("#add8e6", "#ffffff"),
+                #     },
+                    # name_transform=lambda name: name.upper(),
+                # ),
+                
                 # widget.TextBox("default config", name="default"),
                 # widget.TextBox("Press &lt;M-r&gt; to spawn", foreground="#d75f5f"),
                 # NB Systray is incompatible with Wayland, consider using StatusNotifier instead
                 # widget.StatusNotifier(),
-                # widget.Volume()
+                # widget.Volume(),
                 widget.Net(),
                 widget.ThermalZone(),
-                widget.Systray(),
-                widget.Clock(format=" %a %I:%M %p %D"),
+                # widget.Systray(),
+                widget.Clock(format=" %I:%M %p %a %d"),
                 widget.QuickExit(),
             ],
             # define bar height
             20,
-            # border_width=[2, 0, 2, 0],  # Draw top and bottom borders
-            # border_color=["#add8e6", "#add8e6", "#add8e6", "#add8e6"]  # Borders are lightblue
+            border_width=[1, 10, 2, 0],  # Draw top and bottom borders
+            border_color=["#4c566a", "#4c566a", "#add8e6", "#add8e6"],  # Borders are lightblue
+            background="#4c566a",
+            foreground="#d8dee9"
+            # opacity=1,
+            
 
         ),
             # set static wallpaper
-            wallpaper = '~/Pictures/night-in-the-desert.png',
+            wallpaper = '~/Pictures/minimal-space1.jpg',
             # set wallpaper mode to 'fill' or 'stretch'
             wallpaper_mode='fill'
     ),
@@ -206,3 +214,5 @@ wl_input_rules = None
 # We choose LG3D to maximize irony: it is a 3D non-reparenting WM written in
 # java that happens to be on java's whitelist.
 wmname = "LG3D"
+
+
