@@ -23,14 +23,23 @@
 # LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 # SOFTWARE.
-
-from libqtile import bar, layout, widget
-from libqtile.config import Click, Drag, Group, Key, Match, Screen
-from libqtile.lazy import lazy
+import os
+import re
+import socket
+import subprocess
+from typing import List  # noqa: F401
+from libqtile import layout, bar, widget, hook
+from libqtile.config import Click, Drag, Group, Key, Match, Screen, Rule
+from libqtile.command import lazy
+from libqtile.widget import Spacer
+from qtile_extras import widget
+from qtile_extras.widget.decorations import BorderDecoration
+from qtile_extras.widget.decorations import RectDecoration
 # from libqtile.utils import guess_terminal
 
 mod = "mod4"
 terminal = "kitty"
+home = os.path.expanduser('~')
 
 keys = [
     # A list of available commands that can be bound to keys can be found
@@ -118,10 +127,32 @@ layouts = [
     # layout.Zoomy(),
 ]
 
+#colors for the bar
+def init_colors():
+    return [["#D8DEE9", "#D8DEE9"], # color 0
+            ["#2E3440", "#2E3440"], # color 1
+            ["#4C566A", "#4C566A"], # color 2
+            ["#A3BE8C", "#A3BE8C"], # color 3
+            ["#8FBCBB", "#8FBCBB"], # color 4
+            ["#EBCB8B", "#EBCB8B"], # color 5
+            ["#BF616A", "#BF616A"], # color 6
+            ["#81A1C1", "#81A1C1"], # color 7
+            ["#B48EAD", "#B48EAD"], # color 8
+            ["#D08770", "#D08770"]] # color 9
+
+
+colors = init_colors()
+#colors for the bar
+
+
 widget_defaults = dict(
-    font="Montserrat",
+    font="ComicShannsMono Nerd Font",
+    # font="JetBrainsMono Nerd Font",
+    # font="Montserrat",
     fontsize=12,
-    padding=3,
+    padding=5,
+    # border=5,
+    foreground=colors[1],
 )
 extension_defaults = widget_defaults.copy()
 
@@ -130,9 +161,10 @@ screens = [
         top=bar.Bar(
             [
                 # widget.CurrentLayout(),
-                widget.GroupBox(highlight_method="line"),
+                widget.GroupBox(highlight_method="line", active=colors[9], foreground=colors[0]),
                 # widget.Prompt(),
                 # widget.WindowName(),
+                right_arrow(colors[1], colors[2]),
                 widget.WindowTabs(separator="|", background="#2e3440", foreground="#d8dee9", padding=10),
 
                 # widget.Chord(
@@ -147,26 +179,36 @@ screens = [
                 # NB Systray is incompatible with Wayland, consider using StatusNotifier instead
                 # widget.StatusNotifier(),
                 # widget.Volume(),
-                widget.Net(),
-                widget.ThermalZone(),
+                # widget.CapsNumLockIndicator(),
+                # widget.CurrentScreen(),
+                # widget.Clipboard(),
+                left_arrow(colors[1], colors[0]),
+                widget.Net(format='󰀂 {up}  {down}', background=colors[0], ),
+
+                left_arrow(colors[0], colors[3]),
+                widget.ThermalZone(background=colors[3]),
                 # widget.Systray(),
-                widget.Clock(format=" %I:%M %p %a %d"),
-                widget.QuickExit(),
+                left_arrow(colors[3], colors[9]),
+                widget.Clock(format=" %I:%M %p %a %d", background=colors[9]),
+
+                left_arrow(colors[9], colors[6]),
+                widget.QuickExit(background=colors[6], fmt=''),
+                widget.Spacer(background=colors[6], length=10)
             ],
             # define bar height
             20,
-            border_width=[1, 10, 2, 0],  # Draw top and bottom borders
+            opacity=0,
+            border_width=[2, 0, 2, 0],  # Draw top and bottom borders
             border_color=["#4c566a", "#4c566a", "#add8e6", "#add8e6"],  # Borders are lightblue
             background="#4c566a",
-            foreground="#d8dee9"
-            # opacity=1,
+            foreground="#d8dee9",
             
 
         ),
             # set static wallpaper
-            wallpaper = '~/Pictures/minimal-space1.jpg',
+            wallpaper = '~/Pictures/minimal-interstellar.png',
             # set wallpaper mode to 'fill' or 'stretch'
-            wallpaper_mode='fill'
+            wallpaper_mode='fill',
     ),
 ]
 
@@ -215,4 +257,50 @@ wl_input_rules = None
 # java that happens to be on java's whitelist.
 wmname = "LG3D"
 
+from typing import Optional
+from libqtile.widget.textbox import TextBox
 
+
+def left_half_circle(fg_color, bg_color):
+    return TextBox(
+        text='\uE0B6',
+        fontsize=35,
+        foreground=fg_color,
+        background=bg_color,
+        padding=0)
+
+
+def right_half_circle(fg_color, bg_color: Optional['str'] = None):
+    return TextBox(
+        text='\uE0B4',
+        fontsize=35,
+        background=bg_color,
+        foreground=fg_color,
+        padding=0)
+
+
+def lower_left_triangle(bg_color, fg_color):
+    return TextBox(
+        text='\u25e2',
+        padding=0,
+        fontsize=50,
+        background=bg_color,
+        foreground=fg_color)
+
+
+def left_arrow(bg_color, fg_color):
+    return TextBox(
+        text='\uE0B2',
+        padding=0,
+        fontsize=25,
+        background=bg_color,
+        foreground=fg_color)
+
+
+def right_arrow(bg_color, fg_color):
+    return TextBox(
+        text='\uE0B0',
+        padding=0,
+        fontsize=35,
+        background=bg_color,
+        foreground=fg_color)
