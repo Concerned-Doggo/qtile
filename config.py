@@ -151,13 +151,25 @@ screens = [
                 widget.GroupBox(highlight_method="line", active=colors[9], foreground=colors[0]),
 
                 right_arrow(colors[1], colors[2]),
-                widget.WindowTabs(separator="|", background="#2e3440", foreground="#d8dee9", padding=10),
+                # widget.WindowTabs(separator="|", background="#2e3440", foreground="#d8dee9", padding=10),
+                widget.TaskList(
+                    padding=0,
+                    background=colors[1],
+                    foreground=colors[1],
+                    border=colors[7], 
+                    highlight_method="block",
+                    max_title_width=150,
+                    spacing=20,
+                    fontsize=14,
+                    unfocused_border=colors[8],
+                ),
 
                 left_arrow(colors[1], colors[0]),
                 widget.Net(format='󰀂 {up}  {down}', background=colors[0]),
 
                 left_arrow(colors[0], colors[3]),
-                widget.ThermalZone(background=colors[3]),
+                widget.OpenWeather(location="mumbai", background=colors[3], format='{location_city}:{temp}   {icon}'),
+                # widget.ThermalZone(background=colors[3]),
 
                 left_arrow(colors[3], colors[9]),
                 widget.Clock(format=" %I:%M %p %a %d", background=colors[9]),
@@ -167,7 +179,7 @@ screens = [
                 widget.Spacer(background=colors[6], length=10),
             ],
             # define bar height
-            20,
+            23,
             border_width=[1, 0, 2, 0],  # Draw top and bottom borders
             border_color=["#4c566a", "#4c566a", "#add8e6", "#add8e6"],  # Borders are lightblue
             background="#4c566a",
