@@ -23,23 +23,14 @@
 # LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 # SOFTWARE.
-import os
-import re
-import socket
-import subprocess
-from typing import List  # noqa: F401
-from libqtile import layout, bar, widget, hook
-from libqtile.config import Click, Drag, Group, Key, Match, Screen, Rule
-from libqtile.command import lazy
-from libqtile.widget import Spacer
-from qtile_extras import widget
-from qtile_extras.widget.decorations import BorderDecoration
-from qtile_extras.widget.decorations import RectDecoration
+
+from libqtile import bar, layout, widget
+from libqtile.config import Click, Drag, Group, Key, Match, Screen
+from libqtile.lazy import lazy
 # from libqtile.utils import guess_terminal
 
 mod = "mod4"
 terminal = "kitty"
-home = os.path.expanduser('~')
 
 keys = [
     # A list of available commands that can be bound to keys can be found
@@ -143,72 +134,52 @@ def init_colors():
 
 colors = init_colors()
 #colors for the bar
-
-
+    
 widget_defaults = dict(
     font="ComicShannsMono Nerd Font",
-    # font="JetBrainsMono Nerd Font",
-    # font="Montserrat",
     fontsize=12,
     padding=5,
-    # border=5,
     foreground=colors[1],
 )
 extension_defaults = widget_defaults.copy()
+
 
 screens = [
     Screen(
         top=bar.Bar(
             [
-                # widget.CurrentLayout(),
                 widget.GroupBox(highlight_method="line", active=colors[9], foreground=colors[0]),
-                # widget.Prompt(),
-                # widget.WindowName(),
+
                 right_arrow(colors[1], colors[2]),
                 widget.WindowTabs(separator="|", background="#2e3440", foreground="#d8dee9", padding=10),
 
-                # widget.Chord(
-                #     chords_colors={
-                #         "launch": ("#add8e6", "#ffffff"),
-                #     },
-                    # name_transform=lambda name: name.upper(),
-                # ),
-                
-                # widget.TextBox("default config", name="default"),
-                # widget.TextBox("Press &lt;M-r&gt; to spawn", foreground="#d75f5f"),
-                # NB Systray is incompatible with Wayland, consider using StatusNotifier instead
-                # widget.StatusNotifier(),
-                # widget.Volume(),
-                # widget.CapsNumLockIndicator(),
-                # widget.CurrentScreen(),
-                # widget.Clipboard(),
                 left_arrow(colors[1], colors[0]),
-                widget.Net(format='󰀂 {up}  {down}', background=colors[0], ),
+                widget.Net(format='󰀂 {up}  {down}', background=colors[0]),
 
                 left_arrow(colors[0], colors[3]),
                 widget.ThermalZone(background=colors[3]),
-                # widget.Systray(),
+
                 left_arrow(colors[3], colors[9]),
                 widget.Clock(format=" %I:%M %p %a %d", background=colors[9]),
 
                 left_arrow(colors[9], colors[6]),
                 widget.QuickExit(background=colors[6], fmt=''),
-                widget.Spacer(background=colors[6], length=10)
+                widget.Spacer(background=colors[6], length=10),
             ],
             # define bar height
             20,
-            opacity=0,
-            border_width=[2, 0, 2, 0],  # Draw top and bottom borders
+            border_width=[1, 0, 2, 0],  # Draw top and bottom borders
             border_color=["#4c566a", "#4c566a", "#add8e6", "#add8e6"],  # Borders are lightblue
             background="#4c566a",
-            foreground="#d8dee9",
+            foreground="#d8dee9"
+            # opacity=1,
             
 
         ),
             # set static wallpaper
-            wallpaper = '~/Pictures/minimal-interstellar.png',
+            wallpaper = '~/Pictures/minimal-space1.jpg',
             # set wallpaper mode to 'fill' or 'stretch'
-            wallpaper_mode='fill',
+            wallpaper_mode='fill'
     ),
 ]
 
