@@ -23,6 +23,9 @@
 # LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 # SOFTWARE.
+import os
+# from dotenv import load_dotenv
+# load_dotenv()
 
 from libqtile import bar, layout, widget
 from libqtile.config import Click, Drag, Group, Key, Match, Screen
@@ -168,7 +171,12 @@ screens = [
                 widget.Net(format='󰀂 {up}  {down}', background=colors[0]),
 
                 left_arrow(colors[0], colors[3]),
-                widget.OpenWeather(location="mumbai", background=colors[3], format='{location_city}:{temp}   {icon}'),
+                widget.OpenWeather(
+                    location="mumbai",
+                    background=colors[3],
+                    format='{location_city}:{temp}   {icon}',
+                    app_key=os.environ.get('APIKEY'),       
+                ),
                 # widget.ThermalZone(background=colors[3]),
 
                 left_arrow(colors[3], colors[9]),
