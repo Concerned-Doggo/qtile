@@ -79,7 +79,27 @@ keys = [
     Key([mod], "f", lazy.spawn("Thunar"), desc="Spawn Thunar File Manager"),
 ]
 
-groups = [Group(i) for i in '1234']
+# groups = [Group(i) for i in '1234']
+# groups = [Group(f"{i+1}", label="󰏃") for i in range(5)]
+groups = [
+    Group(
+        '1',
+        label="󰈹",
+        matches=[
+            Match(wm_class=["Alacritty", "kitty"]),
+            ],
+        layout="monadtall"
+    ),
+    Group('2', label="", layout="max", matches=[Match(wm_class=["firefox", "brave"])]),
+    Group('3', label="", layout="monadtall", matches=[Match(wm_class=["telegram-desktop"])]),
+    Group('4', label="", layout="monadtall", matches=[Match(wm_class=["qBittorrent"])]),
+    Group('5', label="", layout="monadtall", matches=[Match(wm_class=["discord"])]), 
+#     Group('6', label="六", layout="monadtall"), 
+#     Group('7', label="七", layout="monadtall"), 
+#     Group('8', label="八", layout="monadtall"), 
+#     Group('9', label="九", layout="monadtall"), 
+#     Group('0', label="十", layout="max", matches=[Match(wm_class=["mpv"])])
+]
 
 for i in groups:
     keys.extend(
@@ -151,6 +171,7 @@ screens = [
     Screen(
         top=bar.Bar(
             [
+                TextBox(text='', foreground=colors[9], fontsize=16),
                 widget.GroupBox(highlight_method="line", active=colors[9]),
 
                 right_arrow(colors[1], colors[2]),
