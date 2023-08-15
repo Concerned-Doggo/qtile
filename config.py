@@ -106,7 +106,7 @@ for i in groups:
     )
 
 layouts = [
-    layout.Columns(border_focus=["#add8e6", "#add8e6"], border_width=2, margin=2),
+    layout.Columns(border_focus=["#add8e6", "#add8e6"], border_width=2, margin=2, rounded_borders=1),
     # layout.Max(),
     # Try more layouts by unleashing below layouts.
     # layout.Stack(num_stacks=2),
@@ -151,10 +151,9 @@ screens = [
     Screen(
         top=bar.Bar(
             [
-                widget.GroupBox(highlight_method="line", active=colors[9], foreground=colors[0]),
+                widget.GroupBox(highlight_method="line", active=colors[9]),
 
                 right_arrow(colors[1], colors[2]),
-                # widget.WindowTabs(separator="|", background="#2e3440", foreground="#d8dee9", padding=10),
                 widget.TaskList(
                     padding=0,
                     background=colors[1],
@@ -162,26 +161,34 @@ screens = [
                     border=colors[7], 
                     highlight_method="block",
                     max_title_width=150,
-                    spacing=20,
+                    spacing=8,
                     fontsize=14,
                     unfocused_border=colors[8],
                 ),
 
-                left_arrow(colors[1], colors[0]),
+                left_arrow(colors[1], colors[7]),
+                widget.Wallpaper(directory='~/Pictures/wallpapers/', 
+                                 background=colors[7],
+                                 foreground=colors[0],
+                                 label="Wallpaper", 
+                                 random_selection=True,
+                                 ),
+                # widget.CurrentLayoutIcon(),
+                left_arrow(colors[7], colors[0]),
                 widget.Net(format='󰀂 {up}  {down}', background=colors[0]),
 
                 left_arrow(colors[0], colors[3]),
                 widget.OpenWeather(
                     location="mumbai",
                     background=colors[3],
-                    format='{location_city}:{temp}   {icon}',
+                    format='{location_city}:{temp}  {icon}',
                     app_key=os.environ.get('APIKEY'),       
                 ),
                 # widget.ThermalZone(background=colors[3]),
 
                 left_arrow(colors[3], colors[9]),
                 widget.Clock(format=" %I:%M %p %a %d", background=colors[9]),
-
+                # widget.Battery(),
                 left_arrow(colors[9], colors[6]),
                 widget.QuickExit(background=colors[6], fmt=''),
                 widget.Spacer(background=colors[6], length=10),
@@ -197,7 +204,7 @@ screens = [
 
         ),
             # set static wallpaper
-            wallpaper = '~/Pictures/minimal-space1.jpg',
+            wallpaper = '~/Pictures/minimal-pluto-planet.jpg',
             # set wallpaper mode to 'fill' or 'stretch'
             wallpaper_mode='fill'
     ),
