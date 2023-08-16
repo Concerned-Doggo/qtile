@@ -74,7 +74,7 @@ keys = [
     Key([mod, "control"], "r", lazy.reload_config(), desc="Reload the config"),
     Key([mod, "control", "shift"], "q", lazy.shutdown(), desc="Shutdown Qtile"),
     Key([mod], "p", lazy.spawn("rofi -show drun"), desc="Spawn a rofi command using a prompt widget"),
-    Key([mod], "d", lazy.spawn("rofi -show"), desc="Spawn a rofi command using a prompt widget"),
+    Key([mod], "d", lazy.spawn("discord"), desc="Spawn discord"),
     Key([mod], "w", lazy.spawn("firefox"), desc="Spawn firefox"),
     Key([mod], "f", lazy.spawn("Thunar"), desc="Spawn Thunar File Manager"),
 ]
@@ -86,14 +86,14 @@ groups = [
         '1',
         label="󰈹",
         matches=[
-            Match(wm_class=["Alacritty", "kitty"]),
+            Match(wm_class=["firefox", "brave"]),
             ],
-        layout="monadtall"
+        layout="MonadTall"
     ),
-    Group('2', label="", layout="max", matches=[Match(wm_class=["firefox", "brave"])]),
-    Group('3', label="", layout="monadtall", matches=[Match(wm_class=["telegram-desktop"])]),
-    Group('4', label="", layout="monadtall", matches=[Match(wm_class=["qBittorrent"])]),
-    Group('5', label="", layout="monadtall", matches=[Match(wm_class=["discord"])]), 
+    Group('2', label="", layout="max", matches=[Match(wm_class=["Alacritty", "kitty"])]),
+    Group('3', label="󰙯", layout="MonadTall", matches=[Match(wm_class=["discord"])]),
+    Group('4', label="", layout="MonadTall", matches=[Match(wm_class=["Thunar"])]),
+    Group('5', label="󰒓", layout="MonadTall", matches=[Match(wm_class=[""])]), 
 #     Group('6', label="六", layout="monadtall"), 
 #     Group('7', label="七", layout="monadtall"), 
 #     Group('8', label="八", layout="monadtall"), 
@@ -132,7 +132,7 @@ layouts = [
     # layout.Stack(num_stacks=2),
     # layout.Bsp(),
     # layout.Matrix(),
-    # layout.MonadTall(),
+    layout.MonadTall(border_focus=["#add8e6", "#add8e6"], border_width=2, margin=2, rounded_borders=1),
     # layout.MonadWide(),
     # layout.RatioTile(),
     # layout.Tile(),
@@ -171,10 +171,22 @@ screens = [
     Screen(
         top=bar.Bar(
             [
-                TextBox(text='', foreground=colors[9], fontsize=16),
-                widget.GroupBox(highlight_method="line", active=colors[9]),
+                # TextBox(text='', foreground=colors[9], fontsize=16),
+                widget.Spacer(background=colors[0], length=5),
+                left_half_circle(colors[2], colors[0]),
+                widget.Spacer(background=colors[2], length=5),
+                widget.Image(filename='~/Pictures/happy.png'),
+                    
+                widget.Spacer(background=colors[2], length=5),
 
-                right_arrow(colors[1], colors[2]),
+                widget.GroupBox(highlight_method="line", active=colors[9], block_highlight_text_color=colors[4]),
+
+                lower_left_triangle(colors[2], colors[9]),
+                widget.CurrentLayout(background = colors[9], foreground=colors[0], margin=0, padding=0),
+                widget.CurrentLayoutIcon(background=colors[9], foreground=colors[1]),
+                lower_left_triangle(colors[9], colors[1]),
+
+                # right_arrow(colors[1], colors[2]),
                 widget.TaskList(
                     padding=0,
                     background=colors[1],
@@ -187,32 +199,53 @@ screens = [
                     unfocused_border=colors[8],
                 ),
 
-                left_arrow(colors[1], colors[7]),
+                # left_arrow(colors[1], colors[7]),
+                left_half_circle(colors[7], colors[1]),
                 widget.Wallpaper(directory='~/Pictures/wallpapers/', 
                                  background=colors[7],
                                  foreground=colors[0],
                                  label="Wallpaper", 
                                  random_selection=True,
                                  ),
-                # widget.CurrentLayoutIcon(),
-                left_arrow(colors[7], colors[0]),
-                widget.Net(format='󰀂 {up}  {down}', background=colors[0]),
+                right_half_circle(colors[7], colors[1]),
+                # left_arrow(colors[7], colors[0]),
 
-                left_arrow(colors[0], colors[3]),
+                widget.Spacer(background=colors[1], length=2),
+
+                left_half_circle(colors[0], colors[1]),
+                widget.Net(format='󰀂 {up}  {down}', background=colors[0]),
+                right_half_circle(colors[0], colors[1]),
+
+                # left_arrow(colors[0], colors[3]),
+                widget.Spacer(background=colors[1], length=2),
+
+                left_half_circle(colors[3], colors[1]),
                 widget.OpenWeather(
                     location="mumbai",
                     background=colors[3],
                     format='{location_city}:{temp}  {icon}',
                     app_key=os.environ.get('APIKEY'),       
                 ),
-                # widget.ThermalZone(background=colors[3]),
+                right_half_circle(colors[3], colors[1]),
 
-                left_arrow(colors[3], colors[9]),
+                widget.Spacer(background=colors[1], length=2),
+
+                # left_arrow(colors[3], colors[9]),
+                left_half_circle(colors[9], colors[1]),
                 widget.Clock(format=" %I:%M %p %a %d", background=colors[9]),
+                right_half_circle(colors[9], colors[1]),
+
+                widget.Spacer(background=colors[1], length=2),
+
                 # widget.Battery(),
-                left_arrow(colors[9], colors[6]),
+                # left_arrow(colors[9], colors[6]),
+                left_half_circle(colors[6], colors[1]),
                 widget.QuickExit(background=colors[6], fmt=''),
-                widget.Spacer(background=colors[6], length=10),
+                # widget.Spacer(background=colors[6], length=10),
+                right_half_circle(colors[6], colors[0]),
+
+                widget.Spacer(background=colors[0], length=3),
+
             ],
             # define bar height
             23,
@@ -225,9 +258,9 @@ screens = [
 
         ),
             # set static wallpaper
-            wallpaper = '~/Pictures/minimal-pluto-planet.jpg',
+            # wallpaper = '~/Pictures/minimal-pluto-planet.jpg',
             # set wallpaper mode to 'fill' or 'stretch'
-            wallpaper_mode='fill'
+            # wallpaper_mode='fill'
     ),
 ]
 
@@ -283,26 +316,27 @@ from libqtile.widget.textbox import TextBox
 def left_half_circle(fg_color, bg_color):
     return TextBox(
         text='\uE0B6',
-        fontsize=35,
+        fontsize=20,
         foreground=fg_color,
         background=bg_color,
-        padding=0)
+        padding=0,)
 
 
-def right_half_circle(fg_color, bg_color: Optional['str'] = None):
+def right_half_circle(fg_color, bg_color):
     return TextBox(
         text='\uE0B4',
-        fontsize=35,
+        fontsize=20,
         background=bg_color,
         foreground=fg_color,
-        padding=0)
+        padding=0,)
 
 
 def lower_left_triangle(bg_color, fg_color):
     return TextBox(
-        text='\u25e2',
+        text='\ue0ba',
         padding=0,
-        fontsize=50,
+        margin=0,
+        fontsize=40,
         background=bg_color,
         foreground=fg_color)
 
