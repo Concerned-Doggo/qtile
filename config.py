@@ -74,7 +74,7 @@ keys = [
     Key([mod, "control"], "r", lazy.reload_config(), desc="Reload the config"),
     Key([mod, "control", "shift"], "q", lazy.shutdown(), desc="Shutdown Qtile"),
     Key([mod], "p", lazy.spawn("rofi -show drun"), desc="Spawn a rofi command using a prompt widget"),
-    Key([mod], "d", lazy.spawn("rofi -show"), desc="Spawn a rofi command using a prompt widget"),
+    Key([mod], "d", lazy.spawn("discord"), desc="Spawn discord"),
     Key([mod], "w", lazy.spawn("firefox"), desc="Spawn firefox"),
     Key([mod], "f", lazy.spawn("Thunar"), desc="Spawn Thunar File Manager"),
 ]
@@ -86,14 +86,14 @@ groups = [
         '1',
         label="󰈹",
         matches=[
-            Match(wm_class=["Alacritty", "kitty"]),
+            Match(wm_class=["firefox", "brave"]),
             ],
-        layout="monadtall"
+        layout="MonadTall"
     ),
-    Group('2', label="", layout="max", matches=[Match(wm_class=["firefox", "brave"])]),
-    Group('3', label="", layout="monadtall", matches=[Match(wm_class=["telegram-desktop"])]),
-    Group('4', label="", layout="monadtall", matches=[Match(wm_class=["qBittorrent"])]),
-    Group('5', label="", layout="monadtall", matches=[Match(wm_class=["discord"])]), 
+    Group('2', label="", layout="max", matches=[Match(wm_class=["Alacritty", "kitty"])]),
+    Group('3', label="󰙯", layout="MonadTall", matches=[Match(wm_class=["discord"])]),
+    Group('4', label="", layout="MonadTall", matches=[Match(wm_class=["Thunar"])]),
+    Group('5', label="󰒓", layout="MonadTall", matches=[Match(wm_class=[""])]), 
 #     Group('6', label="六", layout="monadtall"), 
 #     Group('7', label="七", layout="monadtall"), 
 #     Group('8', label="八", layout="monadtall"), 
@@ -132,7 +132,7 @@ layouts = [
     # layout.Stack(num_stacks=2),
     # layout.Bsp(),
     # layout.Matrix(),
-    # layout.MonadTall(),
+    layout.MonadTall(border_focus=["#add8e6", "#add8e6"], border_width=2, margin=2, rounded_borders=1),
     # layout.MonadWide(),
     # layout.RatioTile(),
     # layout.Tile(),
@@ -171,7 +171,12 @@ screens = [
     Screen(
         top=bar.Bar(
             [
-                TextBox(text='', foreground=colors[9], fontsize=16),
+                # TextBox(text='', foreground=colors[9], fontsize=16),
+
+                widget.Spacer(background=colors[2], length=10),
+                widget.Image(filename='~/Pictures/happy.png'),
+                widget.Spacer(background=colors[2], length=10),
+
                 widget.GroupBox(highlight_method="line", active=colors[9]),
 
                 right_arrow(colors[1], colors[2]),
@@ -225,9 +230,9 @@ screens = [
 
         ),
             # set static wallpaper
-            wallpaper = '~/Pictures/minimal-pluto-planet.jpg',
+            # wallpaper = '~/Pictures/minimal-pluto-planet.jpg',
             # set wallpaper mode to 'fill' or 'stretch'
-            wallpaper_mode='fill'
+            # wallpaper_mode='fill'
     ),
 ]
 
@@ -286,7 +291,7 @@ def left_half_circle(fg_color, bg_color):
         fontsize=35,
         foreground=fg_color,
         background=bg_color,
-        padding=0)
+        padding=0,)
 
 
 def right_half_circle(fg_color, bg_color: Optional['str'] = None):
