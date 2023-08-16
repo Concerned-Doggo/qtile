@@ -172,14 +172,21 @@ screens = [
         top=bar.Bar(
             [
                 # TextBox(text='', foreground=colors[9], fontsize=16),
-
-                widget.Spacer(background=colors[2], length=10),
+                widget.Spacer(background=colors[0], length=5),
+                left_half_circle(colors[2], colors[0]),
+                widget.Spacer(background=colors[2], length=5),
                 widget.Image(filename='~/Pictures/happy.png'),
-                widget.Spacer(background=colors[2], length=10),
+                    
+                widget.Spacer(background=colors[2], length=5),
 
-                widget.GroupBox(highlight_method="line", active=colors[9]),
+                widget.GroupBox(highlight_method="line", active=colors[9], block_highlight_text_color=colors[4]),
 
-                right_arrow(colors[1], colors[2]),
+                lower_left_triangle(colors[2], colors[9]),
+                widget.CurrentLayout(background = colors[9], foreground=colors[0], margin=0, padding=0),
+                widget.CurrentLayoutIcon(background=colors[9], foreground=colors[1]),
+                lower_left_triangle(colors[9], colors[1]),
+
+                # right_arrow(colors[1], colors[2]),
                 widget.TaskList(
                     padding=0,
                     background=colors[1],
@@ -192,32 +199,53 @@ screens = [
                     unfocused_border=colors[8],
                 ),
 
-                left_arrow(colors[1], colors[7]),
+                # left_arrow(colors[1], colors[7]),
+                left_half_circle(colors[7], colors[1]),
                 widget.Wallpaper(directory='~/Pictures/wallpapers/', 
                                  background=colors[7],
                                  foreground=colors[0],
                                  label="Wallpaper", 
                                  random_selection=True,
                                  ),
-                # widget.CurrentLayoutIcon(),
-                left_arrow(colors[7], colors[0]),
-                widget.Net(format='󰀂 {up}  {down}', background=colors[0]),
+                right_half_circle(colors[7], colors[1]),
+                # left_arrow(colors[7], colors[0]),
 
-                left_arrow(colors[0], colors[3]),
+                widget.Spacer(background=colors[1], length=2),
+
+                left_half_circle(colors[0], colors[1]),
+                widget.Net(format='󰀂 {up}  {down}', background=colors[0]),
+                right_half_circle(colors[0], colors[1]),
+
+                # left_arrow(colors[0], colors[3]),
+                widget.Spacer(background=colors[1], length=2),
+
+                left_half_circle(colors[3], colors[1]),
                 widget.OpenWeather(
                     location="mumbai",
                     background=colors[3],
                     format='{location_city}:{temp}  {icon}',
                     app_key=os.environ.get('APIKEY'),       
                 ),
-                # widget.ThermalZone(background=colors[3]),
+                right_half_circle(colors[3], colors[1]),
 
-                left_arrow(colors[3], colors[9]),
+                widget.Spacer(background=colors[1], length=2),
+
+                # left_arrow(colors[3], colors[9]),
+                left_half_circle(colors[9], colors[1]),
                 widget.Clock(format=" %I:%M %p %a %d", background=colors[9]),
+                right_half_circle(colors[9], colors[1]),
+
+                widget.Spacer(background=colors[1], length=2),
+
                 # widget.Battery(),
-                left_arrow(colors[9], colors[6]),
+                # left_arrow(colors[9], colors[6]),
+                left_half_circle(colors[6], colors[1]),
                 widget.QuickExit(background=colors[6], fmt=''),
-                widget.Spacer(background=colors[6], length=10),
+                # widget.Spacer(background=colors[6], length=10),
+                right_half_circle(colors[6], colors[0]),
+
+                widget.Spacer(background=colors[0], length=3),
+
             ],
             # define bar height
             23,
@@ -288,26 +316,27 @@ from libqtile.widget.textbox import TextBox
 def left_half_circle(fg_color, bg_color):
     return TextBox(
         text='\uE0B6',
-        fontsize=35,
+        fontsize=20,
         foreground=fg_color,
         background=bg_color,
         padding=0,)
 
 
-def right_half_circle(fg_color, bg_color: Optional['str'] = None):
+def right_half_circle(fg_color, bg_color):
     return TextBox(
         text='\uE0B4',
-        fontsize=35,
+        fontsize=20,
         background=bg_color,
         foreground=fg_color,
-        padding=0)
+        padding=0,)
 
 
 def lower_left_triangle(bg_color, fg_color):
     return TextBox(
-        text='\u25e2',
+        text='\ue0ba',
         padding=0,
-        fontsize=50,
+        margin=0,
+        fontsize=40,
         background=bg_color,
         foreground=fg_color)
 
