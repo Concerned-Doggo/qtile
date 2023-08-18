@@ -23,10 +23,10 @@
 # LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 # SOFTWARE.
-import os
 # from dotenv import load_dotenv
 # load_dotenv()
 
+import os
 from libqtile import bar, layout, widget
 from libqtile.config import Click, Drag, Group, Key, Match, Screen
 from libqtile.lazy import lazy
@@ -88,18 +88,69 @@ groups = [
         matches=[
             Match(wm_class=["firefox", "brave"]),
             ],
-        layout="MonadTall"
+        layout="monadtall"
     ),
-    Group('2', label="", layout="max", matches=[Match(wm_class=["Alacritty", "kitty"])]),
-    Group('3', label="󰙯", layout="MonadTall", matches=[Match(wm_class=["discord"])]),
-    Group('4', label="", layout="MonadTall", matches=[Match(wm_class=["Thunar"])]),
-    Group('5', label="󰒓", layout="MonadTall", matches=[Match(wm_class=[""])]), 
+    Group('2', label="", layout="column", matches=[Match(wm_class=["Alacritty", "kitty"])]),
+    Group('3', label="󰙯", layout="monadtall", matches=[Match(wm_class=["discord"])]),
+    Group('4', label="", layout="monadtall", matches=[Match(wm_class=["Thunar"])]),
+    Group('5', label="󰒓", layout="monadtall", matches=[Match(wm_class=[""])]), 
 #     Group('6', label="六", layout="monadtall"), 
 #     Group('7', label="七", layout="monadtall"), 
 #     Group('8', label="八", layout="monadtall"), 
 #     Group('9', label="九", layout="monadtall"), 
 #     Group('0', label="十", layout="max", matches=[Match(wm_class=["mpv"])])
 ]
+
+from libqtile.widget.textbox import TextBox
+
+
+def left_half_circle(fg_color, bg_color):
+    return TextBox(
+        text='\uE0B6',
+        fontsize=20,
+        foreground=fg_color,
+        background=bg_color,
+        padding=0)
+
+
+def right_half_circle(fg_color, bg_color):
+    return TextBox(
+        text='\uE0B4',
+        fontsize=20,
+        background=bg_color,
+        foreground=fg_color,
+        padding=0)
+
+
+def lower_left_triangle(bg_color, fg_color):
+    return TextBox(
+        text='\ue0ba',
+        padding=0,
+        margin=0,
+        fontsize=40,
+        background=bg_color,
+        foreground=fg_color)
+
+
+def left_arrow(bg_color, fg_color):
+    return TextBox(
+        text='\uE0B2',
+        padding=0,
+        fontsize=25,
+        background=bg_color,
+        foreground=fg_color)
+
+
+def right_arrow(bg_color, fg_color):
+    return TextBox(
+        text='\uE0B0',
+        padding=0,
+        fontsize=35,
+        background=bg_color,
+        foreground=fg_color)
+
+
+
 
 for i in groups:
     keys.extend(
@@ -197,15 +248,20 @@ screens = [
                     spacing=8,
                     fontsize=14,
                     unfocused_border=colors[8],
+                    # opacity=0.8,
+                    txt_floating="🗗 ",
+                    txt_maximized="🗖 ",
+                    txt_minimized="🗕 ",
                 ),
 
+                # arrow_left,
                 # left_arrow(colors[1], colors[7]),
                 left_half_circle(colors[7], colors[1]),
                 widget.Wallpaper(directory='~/Pictures/wallpapers/', 
                                  background=colors[7],
                                  foreground=colors[0],
                                  label="Wallpaper", 
-                                 random_selection=True,
+                                 # random_selection=True,
                                  ),
                 right_half_circle(colors[7], colors[1]),
                 # left_arrow(colors[7], colors[0]),
@@ -253,7 +309,7 @@ screens = [
             border_color=["#4c566a", "#4c566a", "#add8e6", "#add8e6"],  # Borders are lightblue
             background="#4c566a",
             foreground="#d8dee9"
-            # opacity=1,
+            # opacity=0.5,
             
 
         ),
@@ -309,51 +365,4 @@ wl_input_rules = None
 # java that happens to be on java's whitelist.
 wmname = "LG3D"
 
-from typing import Optional
-from libqtile.widget.textbox import TextBox
 
-
-def left_half_circle(fg_color, bg_color):
-    return TextBox(
-        text='\uE0B6',
-        fontsize=20,
-        foreground=fg_color,
-        background=bg_color,
-        padding=0,)
-
-
-def right_half_circle(fg_color, bg_color):
-    return TextBox(
-        text='\uE0B4',
-        fontsize=20,
-        background=bg_color,
-        foreground=fg_color,
-        padding=0,)
-
-
-def lower_left_triangle(bg_color, fg_color):
-    return TextBox(
-        text='\ue0ba',
-        padding=0,
-        margin=0,
-        fontsize=40,
-        background=bg_color,
-        foreground=fg_color)
-
-
-def left_arrow(bg_color, fg_color):
-    return TextBox(
-        text='\uE0B2',
-        padding=0,
-        fontsize=25,
-        background=bg_color,
-        foreground=fg_color)
-
-
-def right_arrow(bg_color, fg_color):
-    return TextBox(
-        text='\uE0B0',
-        padding=0,
-        fontsize=35,
-        background=bg_color,
-        foreground=fg_color)
