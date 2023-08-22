@@ -242,7 +242,7 @@ screens = [
                     padding=0,
                     background=colors[1],
                     foreground=colors[1],
-                    border=colors[7], 
+                    border=colors[9], 
                     highlight_method="block",
                     max_title_width=150,
                     spacing=8,
@@ -265,7 +265,17 @@ screens = [
                                  ),
                 right_half_circle(colors[7], colors[1]),
                 # left_arrow(colors[7], colors[0]),
-
+                #
+                # widget.CheckUpdates(background=colors[0],
+                #                     foreground=colors[1],
+                #                     initial_text="Checking Updates",
+                #                     colour_no_updates=colors[8],
+                #                     no_update_string="Updates: 0",
+                #                     fmt="updates: {}",
+                #                     display_format="Updates: {}",
+                #                     update_interval=1000,
+                #                     ),
+                #
                 widget.Spacer(background=colors[1], length=2),
 
                 left_half_circle(colors[0], colors[1]),
