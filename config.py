@@ -25,6 +25,12 @@
 # SOFTWARE.
 # from dotenv import load_dotenv
 # load_dotenv()
+# #bd93fa
+# #44445c
+# #2c2c34
+# #040404
+# #2c1848
+#
 
 import os
 from libqtile import bar, layout, widget
@@ -77,6 +83,9 @@ keys = [
     Key([mod], "d", lazy.spawn("discord"), desc="Spawn discord"),
     Key([mod], "w", lazy.spawn("firefox"), desc="Spawn firefox"),
     Key([mod], "f", lazy.spawn("Thunar"), desc="Spawn Thunar File Manager"),
+
+    # lock screen
+    Key([mod, "shift"], "l", lazy.spawn("betterlockscreen -l"), desc="lock screen"),
 ]
 
 # groups = [Group(i) for i in '1234']
@@ -88,16 +97,16 @@ groups = [
         matches=[
             Match(wm_class=["firefox", "brave"]),
             ],
-        layout="monadtall"
+        layout="column"
     ),
     Group('2', label="", layout="column", matches=[Match(wm_class=["Alacritty", "kitty"])]),
-    Group('3', label="󰙯", layout="monadtall", matches=[Match(wm_class=["discord"])]),
-    Group('4', label="", layout="monadtall", matches=[Match(wm_class=["Thunar"])]),
-    Group('5', label="󰒓", layout="monadtall", matches=[Match(wm_class=[""])]), 
-#     Group('6', label="六", layout="monadtall"), 
-#     Group('7', label="七", layout="monadtall"), 
-#     Group('8', label="八", layout="monadtall"), 
-#     Group('9', label="九", layout="monadtall"), 
+    Group('3', label="󰙯", layout="column", matches=[Match(wm_class=["discord"])]),
+    Group('4', label="", layout="column", matches=[Match(wm_class=["Thunar"])]),
+    Group('5', label="󰒓", layout="column", matches=[Match(wm_class=[""])]),
+#     Group('6', label="六", layout="monadtall"),
+#     Group('7', label="七", layout="monadtall"),
+#     Group('8', label="八", layout="monadtall"),
+#     Group('9', label="九", layout="monadtall"),
 #     Group('0', label="十", layout="max", matches=[Match(wm_class=["mpv"])])
 ]
 
@@ -208,7 +217,7 @@ def init_colors():
 
 colors = init_colors()
 #colors for the bar
-    
+
 widget_defaults = dict(
     font="ComicShannsMono Nerd Font",
     fontsize=12,
@@ -227,10 +236,14 @@ screens = [
                 left_half_circle(colors[2], colors[0]),
                 widget.Spacer(background=colors[2], length=5),
                 widget.Image(filename='~/Pictures/happy.png'),
-                    
+
                 widget.Spacer(background=colors[2], length=5),
 
-                widget.GroupBox(highlight_method="line", active=colors[9], block_highlight_text_color=colors[4]),
+                widget.GroupBox(highlight_method="line",
+                                active=colors[9],
+                                block_highlight_text_color=colors[4],
+                                urgent_border=colors[4],
+                                urgent_text=colors[4]),
 
                 lower_left_triangle(colors[2], colors[9]),
                 widget.CurrentLayout(background = colors[9], foreground=colors[0], margin=0, padding=0),
@@ -242,7 +255,7 @@ screens = [
                     padding=0,
                     background=colors[1],
                     foreground=colors[1],
-                    border=colors[9], 
+                    border=colors[9],
                     highlight_method="block",
                     max_title_width=150,
                     spacing=8,
@@ -252,19 +265,22 @@ screens = [
                     txt_floating="🗗 ",
                     txt_maximized="🗖 ",
                     txt_minimized="🗕 ",
+                    urgent_border="colors[1]"
                 ),
 
                 # arrow_left,
                 # left_arrow(colors[1], colors[7]),
-                left_half_circle(colors[7], colors[1]),
-                widget.Wallpaper(directory='~/Pictures/wallpapers/', 
-                                 background=colors[7],
-                                 foreground=colors[0],
-                                 label="Wallpaper", 
-                                 # random_selection=True,
-                                 ),
-                right_half_circle(colors[7], colors[1]),
-                # left_arrow(colors[7], colors[0]),
+                # left_half_circle(colors[7], colors[1]),
+                # widget.Wallpaper(directory='~/Pictures/wallpapers/',
+                #                  background=colors[7],
+                #                  foreground=colors[0],
+                #                  label="Wallpaper",
+                #                  wallpaper="~/Pictures/wallpapers/astronut-destroy.jpg"
+                #                  # random_selection=True,
+                #                  ),
+                # right_half_circle(colors[7], colors[1]),
+
+                # # left_arrow(colors[7], colors[0]),
                 #
                 # widget.CheckUpdates(background=colors[0],
                 #                     foreground=colors[1],
@@ -290,7 +306,7 @@ screens = [
                     location="mumbai",
                     background=colors[3],
                     format='{location_city}:{temp}  {icon}',
-                    app_key=os.environ.get('APIKEY'),       
+                    app_key=os.environ.get('APIKEY'),
                 ),
                 right_half_circle(colors[3], colors[1]),
 
@@ -320,13 +336,13 @@ screens = [
             background="#4c566a",
             foreground="#d8dee9"
             # opacity=0.5,
-            
+
 
         ),
             # set static wallpaper
-            # wallpaper = '~/Pictures/minimal-pluto-planet.jpg',
+            wallpaper = '~/Pictures/wallpapers/dracula-solar.png',
             # set wallpaper mode to 'fill' or 'stretch'
-            # wallpaper_mode='fill'
+            wallpaper_mode='fill'
     ),
 ]
 
@@ -374,5 +390,3 @@ wl_input_rules = None
 # We choose LG3D to maximize irony: it is a 3D non-reparenting WM written in
 # java that happens to be on java's whitelist.
 wmname = "LG3D"
-
-
