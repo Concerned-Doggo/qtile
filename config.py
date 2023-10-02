@@ -86,6 +86,8 @@ keys = [
 
     # lock screen
     Key([mod, "shift"], "l", lazy.spawn("betterlockscreen -l"), desc="lock screen"),
+    # flameshot screenshot taker
+    Key([mod, "shift"], "s", lazy.spawn("flameshot gui"), desc="Screenshot"),
 ]
 
 # groups = [Group(i) for i in '1234']
@@ -340,7 +342,7 @@ screens = [
 
         ),
             # set static wallpaper
-            wallpaper = '~/Pictures/wallpapers/dracula-solar.png',
+            wallpaper = '~/Pictures/wallpapers/minimal-interstellar.png',
             # set wallpaper mode to 'fill' or 'stretch'
             wallpaper_mode='fill'
     ),
